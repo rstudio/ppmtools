@@ -1,0 +1,22 @@
+Package: ppmtools
+Type: Package
+Title: Tools for Working With Posit Package Manager
+Version: 0.2.0
+Authors@R: c(
+    person("Joe", "Roberts", email="joe.roberts@posit.co", role = c("aut", "cre")),
+    person(given = "Posit Software, PBC", role = c("cph", "fnd"))
+  )
+Description: Tools to interact with the Posit Package Manager API and 
+    publish packages to local repositories.  
+License: MIT + file LICENSE
+Encoding: UTF-8
+RoxygenNote: 7.2.3
+Depends: tidyjson, dplyr, lubridate
+Imports:
+    cli (>= 3.3.0),
+    devtools,
+    httr (>= 1.4.3),
+    pkgbuild (>= 1.3.1)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
