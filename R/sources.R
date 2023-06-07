@@ -18,7 +18,7 @@ ppm_get_source_id <- function(source_name, url = ppm_url()) {
 
 #' List packages
 #'
-#' Specify either source_name or repoName.
+#' Specify either source_name or repo_name.
 #'
 #' @param source_name The source name
 #' @param repo_name The repository name

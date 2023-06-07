@@ -24,5 +24,5 @@ list_packages(
 A tibble containing one row per package and one column per field
 }
 \description{
-Specify either source_name or repoName.
+Specify either source_name or repo_name.
 }
