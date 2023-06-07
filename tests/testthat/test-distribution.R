@@ -18,4 +18,7 @@ test_that("known distros are detected", {
   test_distro("SUSE Linux Enterprise Server 15 SP1", "sles154")
   test_distro("openSUSE Leap 15.4", "opensuse154")
   test_distro("MysteryLinux 123", "unknown")
+  test_distro("Windows 11 x64 (build 22621)", "windows")
+  test_distro("OS X", "macos")
+  test_distro("macOS", "macos")
 })

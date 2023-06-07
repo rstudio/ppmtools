@@ -7,29 +7,24 @@
 #'
 #' @export
 detect_distro <- function() {
-  # Windows and macOS are easy to find based on the Sys.info()
-  OS <- Sys.info()["sysname"]
-  if (OS == "Windows") {
-    "windows"
-  } else if (OS == "Darwin") {
-    "macos"
-  } else {
-    osv <- utils::osVersion
-    if (grepl("Ubuntu 18", osv)) return("bionic")
-    if (grepl("Ubuntu 20", osv)) return("focal")
-    if (grepl("Ubuntu 22", osv)) return("jammy")
-    if (grepl("Red Hat .* 7\\.", osv)) return("rhel7")
-    if (grepl("Red Hat .* 8\\.", osv)) return("rhel8")
-    if (grepl("Red Hat .* 9\\.", osv)) return("rhel9")
-    if (grepl("Rocky .* 8", osv)) return("rhel8")
-    if (grepl("Rocky .* 9", osv)) return("rhel9")
-    if (grepl("SUSE Linux Enterprise .* 15", osv)) return("sles154")
-    if (grepl("openSUSE .* 15", osv)) return("opensuse154")
-    if (grepl("CentOS .* 7", osv)) return("centos7")
-    if (grepl("CentOS .* 8", osv)) return("rhel8")
-    cli::cli_alert_warning("Could not detect system distribution.  Specify explicitly using the `distro` argument.")
-    "unknown"
-  }
+  osv <- utils::osVersion
+  if (grepl("Windows", osv)) return("windows")
+  if (grepl("macOS", osv)) return("macos")
+  if (grepl("OS X", osv)) return("macos")
+  if (grepl("Ubuntu 18", osv)) return("bionic")
+  if (grepl("Ubuntu 20", osv)) return("focal")
+  if (grepl("Ubuntu 22", osv)) return("jammy")
+  if (grepl("Red Hat .* 7\\.", osv)) return("rhel7")
+  if (grepl("Red Hat .* 8\\.", osv)) return("rhel8")
+  if (grepl("Red Hat .* 9\\.", osv)) return("rhel9")
+  if (grepl("Rocky .* 8", osv)) return("rhel8")
+  if (grepl("Rocky .* 9", osv)) return("rhel9")
+  if (grepl("SUSE Linux Enterprise .* 15", osv)) return("sles154")
+  if (grepl("openSUSE .* 15", osv)) return("opensuse154")
+  if (grepl("CentOS .* 7", osv)) return("centos7")
+  if (grepl("CentOS .* 8", osv)) return("rhel8")
+  cli::cli_alert_warning("Could not detect system distribution.  Specify explicitly using the `distro` argument.")
+  "unknown"
 }
 
 #' List binary distributions
@@ -39,7 +34,8 @@ detect_distro <- function() {
 #' @inheritParams status
 #'
 #' @return A tibble of distribution names and a display name
-#' @import dplyr tidyjson
+#' @import dplyr
+#' @importFrom tidyjson spread_all
 #' @export
 #'
 #' @examples

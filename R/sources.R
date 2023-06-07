@@ -26,7 +26,8 @@ ppm_get_source_id <- function(source_name, url = ppm_url()) {
 #' @inheritParams status
 #'
 #' @return A tibble containing one row per package and one column per field
-#' @import dplyr tidyjson
+#' @import dplyr
+#' @importFrom tidyjson spread_all
 #' @export
 list_packages <- function(source_name, repo_name, fields = c("name", "version"), url = ppm_url()) {
   if (!missing(source_name) && !missing(repo_name)) {

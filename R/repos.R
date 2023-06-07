@@ -20,7 +20,9 @@ ppm_get_repo_id <- function(repo_name, url = ppm_url()) {
 #' @inheritParams status
 #'
 #' @return A tibble of snapshot dates
-#' @import dplyr tidyjson lubridate
+#' @import dplyr
+#' @importFrom lubridate as_date ymd_hms
+#' @importFrom tidyjson spread_all
 #' @export
 snapshots <- function(repo_name, url = ppm_url()) {
   repo_id <- ppm_get_repo_id(repo_name, url)
@@ -39,7 +41,8 @@ snapshots <- function(repo_name, url = ppm_url()) {
 #' @inheritParams status
 #'
 #' @return A tibble of repository names
-#' @import dplyr tidyjson
+#' @import dplyr
+#' @importFrom tidyjson spread_all
 #' @export
 list_repos <- function(url = ppm_url()) {
   hidden <- type <- name <- NULL # check
