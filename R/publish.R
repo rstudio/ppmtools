@@ -7,6 +7,9 @@
 #' @param binary Build and publish binary package instead of source?
 #' @export
 publish_ppm <- function(sourceName, url = ppm_url(), pkg = ".", args = NULL, binary = FALSE) {
+  if (!requireNamespace("devtools", quietly = TRUE)) {
+    cli::cli_abort("Package publishing requires the devtools package.  Install package to continue.")
+  }
   pkg <- devtools::as.package(pkg)
 
   built_path <- pkgbuild::build(pkg$path, tempdir(), manual = TRUE, args = args, binary = binary)
