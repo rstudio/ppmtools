@@ -1,0 +1,40 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ppmtools
+
+  <!-- badges: start -->
+  [![R-CMD-check](https://github.com/rstudio/ppmtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/ppmtools/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
+
+ppmtools is a package of tools for working with R and Posit Package Manager.
+
+## Installation
+
+You can install the development version of ppmtools from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("rstudio/ppmtools")
+```
+
+## Example
+
+Configure R to install packages from Posit Package Manager.  By default, this will set your CRAN repository to use Posit Public Package Manager ([packagemanager.posit.co](https://packagemanager.posit.co)).
+
+```{r example}
+library(ppmtools)
+configure()  
+```
