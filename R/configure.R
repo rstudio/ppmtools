@@ -74,7 +74,7 @@ configure <- function(url = ppm_url(), repo_name = NULL, snapshot = "latest", di
 select_snapshot <- function(repo_name, url) {
   ss <- list_snapshots(repo_name, url)
   if (nrow(ss) <= getOption("ppm.max_snapshots", 20)) {
-    cli::cli_alert("Select snapshot to use:")
+    cli::cli_alert("Select snapshot to use, or 0 for 'latest':")
     selected <- as.character(ss$date[utils::menu(ss$date)])
     selected <- ifelse(length(selected) == 0, "latest", selected)
   } else {

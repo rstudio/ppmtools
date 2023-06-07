@@ -55,7 +55,7 @@ upload_ppm <- function(pkg, built_path, url, sourceName) {
                   httr::add_headers(Authorization = paste("Bearer", ppm_api_token, sep=" ")))
 
   httr::stop_for_status(r)
-  cli::cli_inform("Package successfully published.")
+  cli::cli_alert_success("Package successfully published.")
 
   invisible(TRUE)
 }
@@ -82,7 +82,7 @@ upload_binary_ppm <- function(pkg, built_path, url, sourceName, distro) {
                   httr::add_headers(Authorization = paste("Bearer", ppm_api_token, sep=" ")))
 
   httr::stop_for_status(r)
-  cli::cli_inform("Package successfully published.")
+  cli::cli_alert_success("Package successfully published.")
 
   invisible(TRUE)
 }

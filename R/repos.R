@@ -7,6 +7,7 @@
 #' @export
 ppm_get_repo_id <- function(repo_name, url = ppm_url()) {
   r <- httr::GET(file.path(url, "__api__", "repos", fsep="/"))
+  httr::stop_for_status(r)
   id <- unlist(sapply(httr::content(r), function(x) if(x$name == repo_name) x$id))
   if (is.null(id)) {
     stop("Repository ", dQuote(repo_name), " not found")
@@ -27,6 +28,7 @@ ppm_get_repo_id <- function(repo_name, url = ppm_url()) {
 list_snapshots <- function(repo_name, url = ppm_url()) {
   repo_id <- ppm_get_repo_id(repo_name, url)
   r <- httr::GET(file.path(url, "__api__", "repos", repo_id, "transaction-dates", fsep="/"))
+  httr::stop_for_status(r)
   httr::content(r) %>%
     spread_all %>%
     select(date) %>%
@@ -47,6 +49,7 @@ list_snapshots <- function(repo_name, url = ppm_url()) {
 list_repos <- function(all = FALSE, url = ppm_url()) {
   hidden <- type <- name <- NULL # check
   r <- httr::GET(file.path(url, "__api__", "repos", fsep="/"))
+  httr::stop_for_status(r)
   httr::content(r) %>%
     spread_all %>%
     filter(hidden == all | hidden == FALSE, type == "R") %>%

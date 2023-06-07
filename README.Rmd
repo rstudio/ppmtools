@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+options(ppm.url = NULL)
 ```
 
 # ppmtools
@@ -36,5 +37,5 @@ Configure R to install packages from Posit Package Manager.  By default, this wi
 
 ```{r example}
 library(ppmtools)
-configure()  
+configure()
 ```

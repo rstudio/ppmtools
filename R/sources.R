@@ -9,6 +9,7 @@
 #' @export
 ppm_get_source_id <- function(source_name, url = ppm_url()) {
   r <- httr::GET(file.path(url, "__api__", "sources", fsep="/"))
+  httr::stop_for_status(r)
   id <- unlist(sapply(httr::content(r)$Sources, function(x) if(x$name == source_name) x$id))
   if (is.null(id)) {
     stop("Source ", dQuote(source_name), " not found")
@@ -40,6 +41,7 @@ list_packages <- function(source_name, repo_name, fields = c("name", "version"),
     repo_id <- ppm_get_repo_id(repo_name, url)
     r <- httr::GET(file.path(url, "__api__", "repos", repo_id, "packages", fsep = "/"))
   }
+  httr::stop_for_status(r)
   httr::content(r) %>%
     spread_all %>%
     select(any_of(fields)) %>%
