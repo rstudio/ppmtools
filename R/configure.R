@@ -10,7 +10,7 @@ configure <- function(url = ppm_url(), distro = NULL) {
   # Confirm R can access PPM
   ppm_ver <- tryCatch( status(url)$version,
             error = function(cond) {
-              cli::cli_abort("Unable to access Package Manager at {.url {url}}: {cond}")
+              cli::cli_abort("Unable to access Package Manager at {.url {url}}", parent=cond)
             })
   cli::cli_alert_info("Using Package Manager v{ppm_ver} at {.url {url}}")
 
