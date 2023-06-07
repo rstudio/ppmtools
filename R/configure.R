@@ -12,7 +12,7 @@ configure <- function(url = ppm_url(), distro = NULL) {
             error = function(cond) {
               cli::cli_abort("Unable to access Package Manager at {.url {url}}: {cond}")
             })
-  cli::cli_alert_success("Using Package Manager v{ppm_ver} at {.url {url}}")
+  cli::cli_alert_info("Using Package Manager v{ppm_ver} at {.url {url}}")
 
   # If on Linux, confirm HTTPUserAgent is properly set to install binary packages
   if (.Platform$OS.type == "unix") {
@@ -21,14 +21,14 @@ configure <- function(url = ppm_url(), distro = NULL) {
       eval(parse(text=config))
       cli::cli_alert_success("Configured options to enable binary package installation.")
     }
+  }
 
-    # detect Linux distribution if not specificed
-    if (is.null(distro)) {
-      distro <- detect_distro()
-      cli::cli_alert_success("Detected Package Manager binary distribution as '{distro}'")
-    } else {
-      cli::cli_alert_success("Using specified binary distribution '{distro}'")
-    }
+  # detect distribution if not specificed
+  if (is.null(distro)) {
+    distro <- detect_distro()
+    cli::cli_alert_info("Detected Package Manager binary distribution as '{distro}'")
+  } else {
+    cli::cli_alert_info("Using specified binary distribution '{distro}'")
   }
 
   # Check for available repositories, and prompt if more than one available.
@@ -52,7 +52,8 @@ configure <- function(url = ppm_url(), distro = NULL) {
     repos_opt["CRAN"] <- repo_url
     options(repos = repos_opt)
   }
-  cli::cli_alert_success("Updated CRAN repository URL to {repo_url}")
+  cli::cli_alert_info("Updated CRAN repository URL to {repo_url}")
+  cli::cli_alert_success("Configuration complete")
 }
 
 #' Verify R is properly configured to use Posit Package Manager
@@ -64,12 +65,8 @@ configure <- function(url = ppm_url(), distro = NULL) {
 verify_config <- function(quiet = FALSE) {
   cli::cli_alert("Verifying configuration")
   local({
-    if (.Platform$OS.type != "unix" || Sys.info()["sysname"] == "Darwin") {
-      cli::cli_inform(c(
-        "Posit Package Manager does not currently support binary packages for macOS.\n\n",
-        "You can still use the binary repository URLs, but you will only be\n",
-        "provided with source packages for now."
-      ))
+    if (.Platform$OS.type != "unix") {
+      cli::cli_alert_success("Success!  No additional configuration required.")
       return(invisible())
     }
     dl_method <- getOption("download.file.method", "")
