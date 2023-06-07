@@ -4,9 +4,11 @@
 \alias{list_repos}
 \title{List all repositories on server}
 \usage{
-list_repos(url = ppm_url())
+list_repos(all = FALSE, url = ppm_url())
 }
 \arguments{
+\item{all}{If TRUE include hidden repositories. Defaults to FALSE.}
+
 \item{url}{The Package Manager URL.  Defaults to value of `options("ppm.url")`.}
 }
 \value{

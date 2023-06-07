@@ -1,10 +1,12 @@
 #' Configure your R session to use Posit Package Manager
 #'
 #' @inheritParams status
+#' @param repo_name  repository name.  If NULL, prompt for selection.  Default is to prompt for selection unless only one repository is available.
+#' @param snapshot repository snapshot date.  If NULL, prompt for selection.  Defaults to "latest".
 #' @param distro PPM package distribution from ppmtools::list_distributions().  If NULL (default), attempt to auto-detect.
 #'
 #' @export
-configure <- function(url = ppm_url(), distro = NULL) {
+configure <- function(url = ppm_url(), repo_name = NULL, snapshot = "latest", distro = NULL) {
   cli::cat_rule("Configuring R to use Posit Package Manager", col = "cyan")
 
   # Confirm R can access PPM
@@ -32,7 +34,16 @@ configure <- function(url = ppm_url(), distro = NULL) {
   }
 
   # Check for available repositories, and prompt if more than one available.
-  repos <- list_repos()
+  repos <- list_repos(all=TRUE, url)
+  if (nrow(repos) == 0) {
+    cli::cli_alert_danger("No repositories found on server.")
+    return(invisible)
+  }
+  if (!is.null(repo_name) && !(repo_name %in% repos$name)) {
+    cli::cli_alert_danger("Specified repository '{repo_name}' not found on server.")
+    return(invisible())
+  }
+  repos <- repos[repos$hidden == FALSE,]
   if (nrow(repos) == 1) {
     repo_name <- repos$name[1]
     cli::cli_alert_info("Only one compatible repository on server, using '{repo_name}'.")
@@ -41,12 +52,16 @@ configure <- function(url = ppm_url(), distro = NULL) {
     repo_name <- repos$name[utils::menu(repos$name)]
   }
   if (length(repo_name) != 1) {
-    cli::cli_alert_warning("No repositories detected, leaving repos URL unchanged.")
+    cli::cli_alert_warning("No repositories selected, leaving repository URL unchanged.")
     return(invisible())
   }
 
+  if (is.null(snapshot)) {
+    snapshot <- select_snapshot(repo_name, url)
+  }
+
   # set options("repos") to the proper URL.
-  repo_url <- construct_repo_url(repo_name = repo_name, distro = distro, url = url)
+  repo_url <- construct_repo_url(repo_name, distro, snapshot, url)
   if (length(repo_url)) {
     repos_opt <- getOption("repos")
     repos_opt["CRAN"] <- repo_url
@@ -54,6 +69,27 @@ configure <- function(url = ppm_url(), distro = NULL) {
   }
   cli::cli_alert_info("Updated CRAN repository URL to {repo_url}")
   cli::cli_alert_success("Configuration complete")
+}
+
+select_snapshot <- function(repo_name, url) {
+  ss <- list_snapshots(repo_name, url)
+  if (nrow(ss) <= getOption("ppm.max_snapshots", 20)) {
+    cli::cli_alert("Select snapshot to use:")
+    selected <- as.character(ss$date[utils::menu(ss$date)])
+    selected <- ifelse(length(selected) == 0, "latest", selected)
+  } else {
+    cli::cli_alert("Enter a snapshot date to use in YYYY-MM-DD format, or press enter to use latest packages available:")
+    while (TRUE) {
+      selected <- readline(prompt='>> ')
+      if (selected == "") {
+        selected <- "latest"
+        break
+      }
+      if (selected %in% ss$date) break
+      cli::cli_alert_warning("No snapshot found for '{selected}'.  Try again or press enter to use latest.")
+    }
+  }
+  as.character(selected)
 }
 
 #' Verify R is properly configured to use Posit Package Manager

@@ -24,7 +24,7 @@ ppm_get_repo_id <- function(repo_name, url = ppm_url()) {
 #' @importFrom lubridate as_date ymd_hms
 #' @importFrom tidyjson spread_all
 #' @export
-snapshots <- function(repo_name, url = ppm_url()) {
+list_snapshots <- function(repo_name, url = ppm_url()) {
   repo_id <- ppm_get_repo_id(repo_name, url)
   r <- httr::GET(file.path(url, "__api__", "repos", repo_id, "transaction-dates", fsep="/"))
   httr::content(r) %>%
@@ -35,21 +35,21 @@ snapshots <- function(repo_name, url = ppm_url()) {
     distinct
 }
 
-
 #' List all repositories on server
 #'
+#' @param all If TRUE include hidden repositories. Defaults to FALSE.
 #' @inheritParams status
 #'
 #' @return A tibble of repository names
 #' @import dplyr
 #' @importFrom tidyjson spread_all
 #' @export
-list_repos <- function(url = ppm_url()) {
+list_repos <- function(all = FALSE, url = ppm_url()) {
   hidden <- type <- name <- NULL # check
   r <- httr::GET(file.path(url, "__api__", "repos", fsep="/"))
   httr::content(r) %>%
     spread_all %>%
-    filter(hidden == FALSE, type == "R") %>%
-    select(id, name) %>%
+    filter(hidden == all | hidden == FALSE, type == "R") %>%
+    select(id, name, hidden) %>%
     as_tibble
 }

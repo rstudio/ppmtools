@@ -4,10 +4,19 @@
 \alias{configure}
 \title{Configure your R session to use Posit Package Manager}
 \usage{
-configure(url = ppm_url(), distro = NULL)
+configure(
+  url = ppm_url(),
+  repo_name = NULL,
+  snapshot = "latest",
+  distro = NULL
+)
 }
 \arguments{
 \item{url}{The Package Manager URL.  Defaults to value of `options("ppm.url")`.}
+
+\item{repo_name}{repository name.  If NULL, prompt for selection.  Default is to prompt for selection unless only one repository is available.}
+
+\item{snapshot}{repository snapshot date.  If NULL, prompt for selection.  Defaults to "latest".}
 
 \item{distro}{PPM package distribution from ppmtools::list_distributions().  If NULL (default), attempt to auto-detect.}
 }
