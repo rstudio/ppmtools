@@ -1,16 +1,21 @@
 #' Publish a package to Posit Package Manager
 #'
-#' @param sourceName The Package Manager source to publish the package to
+#' @param source_name The Package Manager source to publish the package to
 #' @inheritParams status
 #' @param pkg The package
 #' @param args Additional args passed to `pkgbuild::build`
 #' @param binary Build and publish binary package instead of source?
 #' @export
-publish_ppm <- function(sourceName, url = ppm_url(), pkg = ".", args = NULL, binary = FALSE) {
+publish_ppm <- function(source_name, url = ppm_url(), pkg = ".", args = NULL, binary = FALSE) {
   if (!requireNamespace("devtools", quietly = TRUE)) {
     cli::cli_abort("Package publishing requires the devtools package.  Install package to continue.")
   }
   pkg <- devtools::as.package(pkg)
+
+  source_id <- ppm_get_source_id(source_name, url)
+  if (is.null(source_id)) {
+    cli::cli_abort("Source '{source_name}' not found.")
+  }
 
   built_path <- pkgbuild::build(pkg$path, tempdir(), manual = TRUE, args = args, binary = binary)
 
@@ -28,21 +33,16 @@ publish_ppm <- function(sourceName, url = ppm_url(), pkg = ".", args = NULL, bin
 
   if (binary) {
     distro <- detect_distro()
-    upload_binary_ppm(pkg, built_path, url, sourceName, distro)
+    upload_binary_ppm(pkg, built_path, url, source_id, distro)
   } else {
-    upload_ppm(pkg, built_path, url, sourceName)
+    upload_ppm(pkg, built_path, url, source_id)
   }
 }
 
-upload_ppm <- function(pkg, built_path, url, sourceName) {
+upload_ppm <- function(pkg, built_path, url, source_id) {
   ppm_api_token <- getOption("ppm.api_token")
 
-  ppm_source_id <- ppm_get_source_id(sourceName, url)
-  if (is.null(ppm_source_id)) {
-    cli::cli_abort("Unrecognized source '{source}'")
-  }
-
-  ppm_publish_url <- file.path(url, "__api__", "sources", ppm_source_id, "packages", fsep="/")
+  ppm_publish_url <- file.path(url, "__api__", "sources", source_id, "packages", fsep="/")
 
   pkg <- devtools::as.package(pkg)
 
@@ -60,15 +60,10 @@ upload_ppm <- function(pkg, built_path, url, sourceName) {
   invisible(TRUE)
 }
 
-upload_binary_ppm <- function(pkg, built_path, url, sourceName, distro) {
+upload_binary_ppm <- function(pkg, built_path, url, source_id, distro) {
   ppm_api_token <- getOption("ppm.api_token")
 
-  ppm_source_id <- ppm_get_source_id(sourceName, url)
-  if (is.null(ppm_source_id)) {
-    cli::cli_abort("Unrecognized source '{source}'")
-  }
-
-  ppm_publish_url <- file.path(url, "__api__", "sources", ppm_source_id, "binaries", fsep="/")
+  ppm_publish_url <- file.path(url, "__api__", "sources", source_id, "binaries", fsep="/")
 
   pkg <- devtools::as.package(pkg)
 

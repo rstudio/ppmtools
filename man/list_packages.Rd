@@ -5,18 +5,24 @@
 \title{List packages}
 \usage{
 list_packages(
-  source_name,
   repo_name,
+  source_name,
+  search = "",
   fields = c("name", "version"),
+  max_rows = 100,
   url = ppm_url()
 )
 }
 \arguments{
-\item{source_name}{The source name}
-
 \item{repo_name}{The repository name}
 
+\item{source_name}{The source name}
+
+\item{search}{A search string to perform a substring match against package names}
+
 \item{fields}{Package properties to retrieve}
+
+\item{max_rows}{Maximum number of packages to return.}
 
 \item{url}{The Package Manager URL.  Defaults to value of `options("ppm.url")`.}
 }

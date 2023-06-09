@@ -5,7 +5,7 @@
 \title{Publish a package to Posit Package Manager}
 \usage{
 publish_ppm(
-  sourceName,
+  source_name,
   url = ppm_url(),
   pkg = ".",
   args = NULL,
@@ -13,7 +13,7 @@ publish_ppm(
 )
 }
 \arguments{
-\item{sourceName}{The Package Manager source to publish the package to}
+\item{source_name}{The Package Manager source to publish the package to}
 
 \item{url}{The Package Manager URL.  Defaults to value of `options("ppm.url")`.}
 
