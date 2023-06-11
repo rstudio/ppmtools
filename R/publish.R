@@ -46,7 +46,7 @@ upload_ppm <- function(pkg, built_path, url, source_id) {
 
   pkg <- devtools::as.package(pkg)
 
-  cli::cli_inform(c(i = "Uploading package to Package Manager"))
+  cli::cli_alert_info("Uploading package to Package Manager")
   body <- list(
     file0 = httr::upload_file(built_path, "application/octet-stream"),
     overwrite = "true"
@@ -67,7 +67,7 @@ upload_binary_ppm <- function(pkg, built_path, url, source_id, distro) {
 
   pkg <- devtools::as.package(pkg)
 
-  cli::cli_inform(c(i = "Uploading package to Package Manager"))
+  cli::cli_alert_info("Uploading package to Package Manager")
   body <- list(
     file0 = httr::upload_file(built_path, "application/octet-stream"),
     overwrite = "true",
