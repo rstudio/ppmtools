@@ -6,7 +6,7 @@
 #'
 #' @param source_name The source name
 #' @inheritParams status
-#' @export
+#' @noRd
 ppm_get_source_id <- function(source_name, url = ppm_url()) {
   r <- httr::GET(file.path(url, "__api__", "sources", fsep="/"))
   httr::stop_for_status(r)

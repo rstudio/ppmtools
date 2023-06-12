@@ -4,7 +4,7 @@
 #'
 #' @param repo_name The repository name
 #' @inheritParams status
-#' @export
+#' @noRd
 ppm_get_repo_id <- function(repo_name, url = ppm_url()) {
   r <- httr::GET(file.path(url, "__api__", "repos", fsep="/"))
   httr::stop_for_status(r)

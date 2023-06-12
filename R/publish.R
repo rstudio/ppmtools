@@ -6,7 +6,7 @@
 #' @param args Additional args passed to `pkgbuild::build`
 #' @param binary Build and publish binary package instead of source?
 #' @export
-publish_ppm <- function(source_name, url = ppm_url(), pkg = ".", args = NULL, binary = FALSE) {
+publish <- function(source_name, url = ppm_url(), pkg = ".", args = NULL, binary = FALSE) {
   if (!requireNamespace("devtools", quietly = TRUE)) {
     cli::cli_abort("Package publishing requires the devtools package.  Install package to continue.")
   }
