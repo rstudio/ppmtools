@@ -34,7 +34,8 @@ list_snapshots <- function(repo_name, url = ppm_url()) {
     select(date) %>%
     mutate(date=as_date(ymd_hms(date))) %>%
     as_tibble %>%
-    distinct
+    distinct %>%
+    arrange(desc(date))
 }
 
 #' List all repositories on server
