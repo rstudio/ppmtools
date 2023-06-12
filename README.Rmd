@@ -23,6 +23,10 @@ options(ppm.url = NULL)
 
 ppmtools is a package of tools for working with R and [Posit Package Manager](https://posit.co/products/enterprise/package-manager/).
 
+> **Warning**
+>
+> This package is currently a work-in-progress.  Feel free to try it out and use it, but expect that any function names, arguments, or outputs may change in future updates.  Feedback welcome anytime!
+
 ## Installation
 
 You can install the development version of ppmtools from [GitHub](https://github.com/) with:
