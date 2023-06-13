@@ -10,7 +10,7 @@ list_sources(url = ppm_url())
 \item{url}{The Package Manager URL.  Defaults to value of `options("ppm.url")`.}
 }
 \value{
-A tibble of source names
+A data.frame of source names and ids
 }
 \description{
 List all sources

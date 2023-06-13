@@ -12,7 +12,7 @@ list_snapshots(repo_name, url = ppm_url())
 \item{url}{The Package Manager URL.  Defaults to value of `options("ppm.url")`.}
 }
 \value{
-A tibble of snapshot dates
+A vector of snapshot dates
 }
 \description{
 List all available snapshot dates for a repository

@@ -18,3 +18,7 @@ construct_repo_url <- function(repo_name, distro, snapshot = "latest", url) {
     file.path(url, repo_name, "__linux__", distro, snapshot, fsep="/")
   }
 }
+
+json_extract <- function(object, fields) {
+  as.data.frame(sapply(fields, function(x) sapply(object, '[[', x)))
+}

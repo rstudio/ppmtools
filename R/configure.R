@@ -73,9 +73,9 @@ configure <- function(url = ppm_url(), repo_name = NULL, snapshot = "latest", di
 
 select_snapshot <- function(repo_name, url) {
   ss <- list_snapshots(repo_name, url)
-  if (nrow(ss) <= getOption("ppm.max_snapshots", 20)) {
+  if (length(ss) <= getOption("ppm.max_snapshots", 20)) {
     cli::cli_alert("Select snapshot to use, or 0 for 'latest':")
-    selected <- as.character(ss$date[utils::menu(ss$date)])
+    selected <- as.character(ss[utils::menu(ss)])
     selected <- ifelse(length(selected) == 0, "latest", selected)
   } else {
     cli::cli_alert("Enter a snapshot date to use in YYYY-MM-DD format, or press enter to use latest packages available:")
@@ -85,7 +85,7 @@ select_snapshot <- function(repo_name, url) {
         selected <- "latest"
         break
       }
-      if (selected %in% ss$date) break
+      if (selected %in% as.character(ss)) break
       cli::cli_alert_warning("No snapshot found for '{selected}'.  Try again or press enter to use latest.")
     }
   }

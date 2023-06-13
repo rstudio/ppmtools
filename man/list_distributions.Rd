@@ -10,7 +10,7 @@ list_distributions(url = ppm_url())
 \item{url}{The Package Manager URL.  Defaults to value of `options("ppm.url")`.}
 }
 \value{
-A tibble of distribution names and a display name
+A data.frame of distribution names and a display name
 }
 \description{
 Retrieve a list of available distributions for binary R packages from Package Manager.

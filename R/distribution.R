@@ -33,18 +33,12 @@ detect_distro <- function() {
 #'
 #' @inheritParams status
 #'
-#' @return A tibble of distribution names and a display name
-#' @import dplyr
-#' @importFrom tidyjson spread_all
+#' @return A data.frame of distribution names and a display name
 #' @export
 #'
 #' @examples
 #' distros <- list_distributions()
 list_distributions <- function(url = ppm_url()) {
-  hidden <- name <- display <- NULL # check
-  status(url)$distros %>%
-    spread_all %>%
-    filter(hidden == FALSE) %>%
-    select(name, display) %>%
-    as_tibble
+    result <- status(url)$distros
+    result[result$hidden == FALSE, c("name", "display")]
 }

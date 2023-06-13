@@ -12,7 +12,7 @@ list_repos(all = FALSE, url = ppm_url())
 \item{url}{The Package Manager URL.  Defaults to value of `options("ppm.url")`.}
 }
 \value{
-A tibble of repository names
+A data.frame of repositories
 }
 \description{
 List all repositories on server
