@@ -1,5 +1,6 @@
 # Internal utilities
 
+#' @export
 P3M <- "https://packagemanager.posit.co"
 
 # Fetch the ppm URL or error
@@ -21,4 +22,24 @@ construct_repo_url <- function(repo_name, distro, snapshot = "latest", url) {
 
 json_extract <- function(object, fields) {
   as.data.frame(sapply(fields, function(x) sapply(object, '[[', x)))
+}
+
+#' Build a PPM API URL
+#'
+#' Builds an appropriately formated URL to call the PPM API given the
+#' necessary components.
+#'
+#' @param ... url path components following but not including "/__api__/"
+#' @param url base URL
+#' @param query list of query parameters to be added to URL
+#'
+#' @return A complete URL string
+#' @noRd
+construct_api_url <- function(..., url, query) {
+  result <- file.path(url, "__api__", ..., fsep = "/")
+  if (!missing(query) && is.list(query) && length(query) > 0) {
+    query_string <- paste0(names(unlist(query)), "=", unlist(query), collapse="&")
+    result <- paste0(result, "?", query_string)
+  }
+  result
 }
