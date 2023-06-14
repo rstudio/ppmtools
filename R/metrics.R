@@ -53,7 +53,9 @@ get_package_count <- function(package_name, days = 30, url = ppm_url()) {
 #' @importFrom lubridate as_date today days ymd
 #'
 #' @examples
-#' package_daily_counts_7 <- get_package_count_history(c("ggplot2", "dplyr", "shiny"), start_date = today() - days(7))
+#' \dontrun{package_daily_counts_7 <- get_package_count_history(
+#'     c("ggplot2", "dplyr", "shiny"),
+#'     start_date = lubridate::today() - lubridate::days(7))}
 
 get_package_count_history <- function(package_names, start_date = "2023-01-01", url = ppm_url()) {
 

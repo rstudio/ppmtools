@@ -24,7 +24,7 @@ ppm_get_repo_id <- function(repo_name, url) {
 #' @export
 list_snapshots <- function(repo_name, url = ppm_url()) {
   repo_id <- ppm_get_repo_id(repo_name, url)
-  r <- jsonlite::fromJSON(file.path(url, "__api__", "repos", repo_id, "transaction-dates", fsep="/"))
+  r <- jsonlite::fromJSON(construct_api_url("repos", repo_id, "transaction-dates", url = url))
   rev(unique(lubridate::as_date(lubridate::ymd_hms(r$date))))
 }
 
@@ -37,6 +37,6 @@ list_snapshots <- function(repo_name, url = ppm_url()) {
 #' @export
 list_repos <- function(all = FALSE, url = ppm_url()) {
   hidden <- type <- name <- NULL # check
-  r <- jsonlite::fromJSON(file.path(url, "__api__", "repos", fsep="/"))
+  r <- jsonlite::fromJSON(construct_api_url("repos", url = url))
   r[r$hidden %in% c(FALSE, all) & r$type == "R", c("id", "name", "hidden")]
 }

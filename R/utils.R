@@ -1,5 +1,6 @@
 # Internal utilities
 
+#' Default URL to Posit Public Package Manager
 #' @export
 P3M <- "https://packagemanager.posit.co"
 

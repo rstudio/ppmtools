@@ -24,5 +24,7 @@ A data.frame listing downloads for each package by date
 Get table of historic daily package counts
 }
 \examples{
-package_daily_counts_90 <- get_package_count_history(c("ggplot2", "dplyr", "shiny"), start_date = today() - days(90))
+\dontrun{package_daily_counts_7 <- get_package_count_history(
+    c("ggplot2", "dplyr", "shiny"),
+    start_date = lubridate::today() - lubridate::days(7))}
 }

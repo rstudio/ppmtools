@@ -23,7 +23,7 @@ ppm_get_source_id <- function(source_name, url) {
 #' @return A data.frame of source names and ids
 #' @export
 list_sources <- function(url = ppm_url()) {
-  r <- jsonlite::fromJSON(file.path(url, "__api__", "sources", fsep="/"))
+  r <- jsonlite::fromJSON(construct_api_url("sources", url = url))
   merge(r$Sources, source_types, by.x = "type", by.y = "id")[,c("id", "name", "typename", "lang", "last_sync")]
 }
 

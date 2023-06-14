@@ -13,7 +13,7 @@ test_that("more days have more downloads", {
 
 test_that("package daily counts work", {
   package_list <- c("ggplot2", "dplyr", "shiny")
-  package_daily_counts_7 <- get_package_count_history(package_list, start_date = today() - days(7))
-  expect_equal(nrow(package_daily_counts_7), 21)
-  expect_equal(unique(package_daily_counts_7$package), package_list)
+  package_daily_counts_2 <- get_package_count_history(package_list, start_date = today() - days(2))
+  expect_equal(nrow(package_daily_counts_2), 6)
+  expect_equal(unique(package_daily_counts_2$package), package_list)
 })

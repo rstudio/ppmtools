@@ -20,9 +20,9 @@ test_that("missing HTTPUserAgent is fixed on Linux", {
 })
 
 test_that("bad URL - unknown host", {
-  expect_error(configure("https://nohost"), regexp = ".*Unable to access Package Manager.*")
+  expect_error(suppressWarnings(configure("https://nohost")), regexp = ".*Unable to access Package Manager.*")
 })
 
 test_that("bad URL - good host but 404", {
-  expect_error(configure("https://p3m.dev/garbage"), regexp = ".*Unable to access Package Manager.*")
+  expect_error(suppressWarnings(configure("https://p3m.dev/garbage")), regexp = ".*Unable to access Package Manager.*")
 })

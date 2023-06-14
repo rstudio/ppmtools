@@ -6,5 +6,5 @@
 #'
 #' @export
 status <- function(url = ppm_url()) {
-  jsonlite::fromJSON(file.path(url, "__api__", "status", fsep="/"))
+  jsonlite::fromJSON(construct_api_url("status", url = url))
 }

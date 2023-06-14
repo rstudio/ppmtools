@@ -42,7 +42,7 @@ publish <- function(source_name, url = ppm_url(), pkg = ".", args = NULL, binary
 upload_ppm <- function(pkg, built_path, url, source_id) {
   ppm_api_token <- getOption("ppm.api_token")
 
-  ppm_publish_url <- file.path(url, "__api__", "sources", source_id, "packages", fsep="/")
+  ppm_publish_url <- construct_api_url("sources", source_id, "packages", url = url)
 
   pkg <- devtools::as.package(pkg)
 
@@ -63,7 +63,7 @@ upload_ppm <- function(pkg, built_path, url, source_id) {
 upload_binary_ppm <- function(pkg, built_path, url, source_id, distro) {
   ppm_api_token <- getOption("ppm.api_token")
 
-  ppm_publish_url <- file.path(url, "__api__", "sources", source_id, "binaries", fsep="/")
+  ppm_publish_url <- construct_api_url("sources", source_id, "binaries", url = url)
 
   pkg <- devtools::as.package(pkg)
 

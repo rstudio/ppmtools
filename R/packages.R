@@ -26,12 +26,13 @@ list_packages <- function(repo_name, source_name, search = "", fields = c("name"
   result_page <- 1
   results <- data.frame()
   while (nrow(results) < max_rows) {
-    r <- jsonlite::fromJSON(file.path(url, "__api__", type, id, "packages",
-                            paste0("?_limit=", max_rows,
-                                   "&_page=", result_page,
-                                   "&name_like=", search,
-                                   "&exact_first=true"),
-                            fsep = "/"))
+    r <- jsonlite::fromJSON(construct_api_url(type, id, "packages",
+                                              url = url,
+                                              query = list(
+                                                `_limit` = max_rows,
+                                                `_page` = result_page,
+                                                name_like = search,
+                                                exact_first = "true")))
     if (length(r) == 0) break;
     rs <- r[, fields]
     if (nrow(results) + nrow(rs) >= max_rows) {
