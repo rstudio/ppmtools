@@ -26,7 +26,6 @@ list_packages <- function(repo_name, source_name, search = "", fields = c("name"
   result_page <- 1
   results <- data.frame()
   while (nrow(results) < max_rows) {
-    cat("page ", result_page, "\n")
     r <- jsonlite::fromJSON(file.path(url, "__api__", type, id, "packages",
                             paste0("?_limit=", max_rows,
                                    "&_page=", result_page,
