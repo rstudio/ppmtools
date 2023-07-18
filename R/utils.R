@@ -13,6 +13,14 @@ ppm_url <- function() {
   u
 }
 
+ppm_api_token <- function(scope) {
+  if(missing(scope)) {
+    getOption("ppm.api_token")
+  } else {
+    getOption(paste0("ppm.api_token.", scope), getOptions("ppm.api_token"))
+  }
+}
+
 construct_repo_url <- function(repo_name, distro, snapshot = "latest", url) {
   if (distro %in% c("windows", "macos")) {
     file.path(url, repo_name, snapshot, fsep="/")

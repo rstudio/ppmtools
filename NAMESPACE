@@ -2,9 +2,11 @@
 
 export(P3M)
 export(configure)
+export(create_git_builder)
 export(detect_distro)
 export(get_package_count)
 export(get_package_count_history)
+export(git_builder_logs)
 export(list_distributions)
 export(list_packages)
 export(list_repos)
