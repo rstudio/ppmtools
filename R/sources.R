@@ -23,8 +23,14 @@ ppm_get_source_id <- function(source_name, url) {
 #' @return A data.frame of source names and ids
 #' @export
 list_sources <- function(url = ppm_url()) {
-  r <- jsonlite::fromJSON(construct_api_url("sources", url = url))
-  merge(r$Sources, source_types, by.x = "type", by.y = "id")[,c("id", "name", "typename", "lang", "last_sync")]
+  ppm_api_token <- getOption("ppm.api_token")
+  r <- httr::GET(
+    construct_api_url("sources", url = url),
+    httr::add_headers(Authorization = paste("Bearer", ppm_api_token, sep=" "))
+  )
+  httr::stop_for_status(r)
+  df <- jsonlite::fromJSON(httr::content(r, "text"))
+  merge(df$Sources, source_types, by.x = "type", by.y = "id")[,c("id", "name", "typename", "lang", "last_sync")]
 }
 
 source_types <- data.frame(
@@ -43,3 +49,4 @@ source_types <- data.frame(
            ),
   lang = c("R", "R", "R", "R", "Python", "BioC", "R", "BioC", "Python", "Python", "Python")
 )
+
